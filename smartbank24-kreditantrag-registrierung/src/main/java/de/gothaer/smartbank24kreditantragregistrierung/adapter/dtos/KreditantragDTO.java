@@ -1,4 +1,4 @@
-package de.gothaer.smartbank24kreditantragregistrierung.adapter.controllers.dtos;
+package de.gothaer.smartbank24kreditantragregistrierung.adapter.dtos;
 
 
 import lombok.AllArgsConstructor;

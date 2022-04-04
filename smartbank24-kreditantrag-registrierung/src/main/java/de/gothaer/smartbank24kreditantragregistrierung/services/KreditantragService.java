@@ -1,4 +1,9 @@
 package de.gothaer.smartbank24kreditantragregistrierung.services;
 
-public class KreditantragService {
+
+import de.gothaer.smartbank24kreditantragregistrierung.services.model.Kreditantrag;
+
+public interface KreditantragService {
+
+    public void register(Kreditantrag kreditantrag) throws KreditantragServiceException ;
 }
