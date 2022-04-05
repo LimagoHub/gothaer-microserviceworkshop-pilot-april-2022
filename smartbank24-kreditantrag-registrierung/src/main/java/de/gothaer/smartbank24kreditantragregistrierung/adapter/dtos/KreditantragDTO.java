@@ -22,10 +22,10 @@ public class KreditantragDTO implements Serializable {
     private static final long serialVersionUID = 8144682724082102640L;
 
 
-    @Builder.Default
+
     @Size(min = 36, max = 36)
     @NotNull
-    private String creditApplicationId = UUID.randomUUID().toString();
+    private String creditApplicationId ;
 
     @NotNull
     @Size(min = 2, max = 51, message = "bitte min. 2 Zeichen eingeben")

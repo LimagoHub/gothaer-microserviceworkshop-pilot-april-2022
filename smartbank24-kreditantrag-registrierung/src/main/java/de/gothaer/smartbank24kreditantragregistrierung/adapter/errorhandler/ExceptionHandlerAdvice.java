@@ -1,7 +1,7 @@
 package de.gothaer.smartbank24kreditantragregistrierung.adapter.errorhandler;
 
 
-import de.gothaer.smartbank24kreditantragregistrierung.services.KreditantragServiceException;
+import de.gothaer.smartbank24kreditantragregistrierung.domain.services.KreditantragServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
