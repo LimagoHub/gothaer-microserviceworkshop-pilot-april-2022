@@ -150,13 +150,13 @@ Wilde Hilfsklassen zur Vermeidung von IF-Orgien
 
         // Ok
     }
-    class StateFactory {
+    class StateFactory implements Serializable{
 
         private static final String PREFIX = "de.limago.kreditantragstore.services.models.Kreditantrag$";
         public KreditantragZustandHandler create(KreditantragStatus kreditantragState) {
             try {
 
-                Class clazz = Class.forName(PREFIX + kreditantragState.getClassname());
+                Class<?> clazz = Class.forName(PREFIX + kreditantragState.getClassname());
                 Constructor<?> constructor = clazz.getDeclaredConstructor(Kreditantrag.class);
                 return (KreditantragZustandHandler) constructor.newInstance(Kreditantrag.this);
 

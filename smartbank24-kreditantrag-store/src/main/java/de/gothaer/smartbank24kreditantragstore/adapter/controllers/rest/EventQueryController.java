@@ -19,7 +19,7 @@ public class EventQueryController {
     @GetMapping(path="/{id}")
     public ResponseEntity<AbstractEventEntity>findEventById(@PathVariable String id) {
         return ResponseEntity.of(repo.findById(id));
-        //return Mono.just(ResponseEntity.of(repo.findById(id)));
+
     }
 
     @GetMapping(path="")
