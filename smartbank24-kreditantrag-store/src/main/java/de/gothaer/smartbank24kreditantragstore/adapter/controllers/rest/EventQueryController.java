@@ -6,9 +6,7 @@ import de.gothaer.smartbank24kreditantragstore.application.events.eventstore.rep
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
+
 
 import java.util.List;
 
@@ -26,6 +24,6 @@ public class EventQueryController {
 
     @GetMapping(path="")
     public List<AbstractEventEntity> findAll(@RequestParam(required = false, defaultValue = "%",name = "kreditantrag-id") String id) {
-        return repo.findByCreditApplicationIdLikeOrderByEventTimestampAsc(id);
+        return repo.findByCreditApplicationId(id);
     }
 }
