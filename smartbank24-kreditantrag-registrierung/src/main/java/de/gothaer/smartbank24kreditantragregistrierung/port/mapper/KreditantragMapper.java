@@ -1,6 +1,6 @@
 package de.gothaer.smartbank24kreditantragregistrierung.port.mapper;
 
-import de.gothaer.smartbank24kreditantragregistrierung.adapter.controllers.dtos.KreditantragDTO;
+
 import de.gothaer.smartbank24kreditantragregistrierung.port.repositories.entities.KreditantragEntity;
 import de.gothaer.smartbank24kreditantragregistrierung.services.model.Kreditantrag;
 import org.mapstruct.Mapper;

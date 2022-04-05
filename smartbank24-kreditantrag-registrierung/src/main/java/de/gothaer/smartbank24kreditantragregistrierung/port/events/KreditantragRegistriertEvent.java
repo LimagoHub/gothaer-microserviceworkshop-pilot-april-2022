@@ -1,7 +1,8 @@
 package de.gothaer.smartbank24kreditantragregistrierung.port.events;
 
 
-import de.gothaer.smartbank24kreditantragregistrierung.adapter.controllers.dtos.KreditantragDTO;
+
+import de.gothaer.smartbank24kreditantragregistrierung.adapter.dtos.KreditantragDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,5 @@
 package de.gothaer.smartbank24kreditantragregistrierung.port.config;
 
-import de.gothaer.smartbank24kreditantragregistrierung.port.mapper.KreditantragMapper;
-import de.gothaer.smartbank24kreditantragregistrierung.port.repositories.KreditantragPersistence;
 import de.gothaer.smartbank24kreditantragregistrierung.port.repositories.KreditantragRepository;
 import de.gothaer.smartbank24kreditantragregistrierung.services.KreditantragService;
 import de.gothaer.smartbank24kreditantragregistrierung.services.impl.KreditantragServiceImpl;

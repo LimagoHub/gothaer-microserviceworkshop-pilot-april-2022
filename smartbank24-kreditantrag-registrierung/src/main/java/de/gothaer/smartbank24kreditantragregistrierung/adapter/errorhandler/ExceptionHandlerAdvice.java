@@ -1,6 +1,7 @@
-package de.gothaer.smartbank24kreditantragregistrierung.adapter.controllers.errorhandler;
+package de.gothaer.smartbank24kreditantragregistrierung.adapter.errorhandler;
 
 
+import de.gothaer.smartbank24kreditantragregistrierung.services.KreditantragServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,14 +37,14 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler{
         return ResponseEntity.badRequest().body(body);
     }
 	
-//	@ExceptionHandler(KreditantragServiceException.class)
-//	public ResponseEntity<Object> handleKreditantragServiceException(KreditantragServiceException ex, WebRequest request) {
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put(TIMESTAMP, LocalDateTime.now());
-//        body.put(MESSAGE, ex.getMessage());
-//        log.error("Fehler beim Verarbeiten des Kreditantrags", ex);// Wichtig
-//        return ResponseEntity.badRequest().body(body);
-//    }
+	@ExceptionHandler(KreditantragServiceException.class)
+	public ResponseEntity<Object> handleKreditantragServiceException(KreditantragServiceException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put(TIMESTAMP, LocalDateTime.now());
+        body.put(MESSAGE, ex.getMessage());
+        log.error("Fehler beim Verarbeiten des Kreditantrags", ex);// Wichtig
+        return ResponseEntity.badRequest().body(body);
+    }
 
 	 @Override
 	 public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
