@@ -20,6 +20,7 @@ public class KreditantragServiceImpl implements KreditantragService {
         try {
             throwExceptionIfApplicationenAlreadyExits(antrag);
             repo.save(mapper.convert(antrag));
+
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format("Fehler beim Speiochern des Antrags mit der IS '%s'.",antrag.getCreditApplicationId()) , e);
         }
@@ -31,6 +32,7 @@ public class KreditantragServiceImpl implements KreditantragService {
             var kreditantrag = findeKreditantragMitId(id);
             var result = kreditantrag.behandlePositivesScoring();
             save(kreditantrag);
+
             return result;
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(FEHLER_BEIM_VERARBEITEN_DES_SCORINGS,id) , e);
