@@ -30,9 +30,8 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     public void handleKreditantragRegistriert(KreditantragEvent event) throws KreditantragServiceException {
 
         try {
-            kreditantragService.speichereKreditantrag(mapper.convert(event.getKreditantrag()));
             eventService.storeKreditantragRegistiertEvent(event);
-            eventService.storeAndFireKreditAntragPersistiertOutEvent(KreditantragEvent.builder().kreditantrag(event.getKreditantrag()).build());
+            kreditantragService.speichereKreditantrag(mapper.convert(event.getKreditantrag()));
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(ERROR_MESSAGE,event.getKreditantrag().getCreditApplicationId()) , e);
         }
@@ -44,7 +43,8 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
         try {
 
             eventService.storeScoringPositiveEvent(event);
-            storeAndFireKreditvertragEmpfohlenOutEvent(event);
+            kreditantragService.verarbeitePositivesScoring(event.getCreditApplicationId());
+
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(ERROR_MESSAGE,event.getCreditApplicationId()) , e);
         }
@@ -56,9 +56,7 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     public void handleScoringNegative(ScoringEvent event) throws KreditantragServiceException {
         try {
             eventService.storeScoringNegativeEvent(event);
-            if (kreditantragService.verarbeiteNegativesScoring(event.getCreditApplicationId()) == Kreditantrag.StatusWechsel.DENIED) {
-               eventService.storeAndFireKreditvertragAbgelehntOutEvent(KreditantragEvent.builder().kreditantrag(mapper.convert(kreditantragService.findeKreditantragMitId(event.getCreditApplicationId()))).build());
-            }
+            kreditantragService.verarbeiteNegativesScoring(event.getCreditApplicationId());
 
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(ERROR_MESSAGE,event.getCreditApplicationId()) , e);
@@ -69,9 +67,7 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     public void handleCityScoringPositive(ScoringEvent event) throws KreditantragServiceException {
         try {
             eventService.storeCityScoringPositiveEvent(event);
-            if (kreditantragService.verarbeitePositivesCityScoring(event.getCreditApplicationId()) == Kreditantrag.StatusWechsel.ACCEPTED) {
-                eventService.storeAndFireKreditvertragEmpfohlenOutEvent(KreditantragEvent.builder().kreditantrag(mapper.convert(kreditantragService.findeKreditantragMitId(event.getCreditApplicationId()))).build());
-            }
+            kreditantragService.verarbeitePositivesCityScoring(event.getCreditApplicationId());
 
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(ERROR_MESSAGE,event.getCreditApplicationId()) , e);
@@ -82,18 +78,33 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     public void handleCityScoringNegative(ScoringEvent event) throws KreditantragServiceException {
         try {
             eventService.storeCityScoringNegativeEvent(event);
-            if (kreditantragService.verarbeiteNegativesCityScoring(event.getCreditApplicationId())== Kreditantrag.StatusWechsel.DENIED) {
-                eventService.storeAndFireKreditvertragAbgelehntOutEvent(KreditantragEvent.builder().kreditantrag(mapper.convert(kreditantragService.findeKreditantragMitId(event.getCreditApplicationId()))).build());
-            }
+            kreditantragService.verarbeiteNegativesCityScoring(event.getCreditApplicationId());
 
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(ERROR_MESSAGE,event.getCreditApplicationId()) , e);
         }
     }
 
-    private void storeAndFireKreditvertragEmpfohlenOutEvent(ScoringEvent event) {
-        if(kreditantragService.verarbeitePositivesScoring(event.getCreditApplicationId()) == Kreditantrag.StatusWechsel.ACCEPTED){
-            eventService.storeAndFireKreditvertragEmpfohlenOutEvent(KreditantragEvent.builder().kreditantrag(mapper.convert(kreditantragService.findeKreditantragMitId(event.getCreditApplicationId()))).build());
-        }
+    @Override
+    public void fireKreditantragPersitedEvent(Kreditantrag kreditantrag) {
+        eventService.storeAndFireKreditAntragPersistiertOutEvent(KreditantragEvent.builder().kreditantrag(mapper.convert(kreditantrag)).build());
+
     }
+
+    @Override
+    public void fireKreditantragAcceptedEvent(Kreditantrag kreditantrag) {
+        eventService.storeAndFireKreditvertragEmpfohlenOutEvent(KreditantragEvent.builder().kreditantrag(mapper.convert(kreditantrag)).build());
+    }
+
+    @Override
+    public void fireKreditantragDeniedEvent(Kreditantrag kreditantrag) {
+        eventService.storeAndFireKreditvertragAbgelehntOutEvent(KreditantragEvent.builder().kreditantrag(mapper.convert(kreditantrag)).build());
+    }
+
+    @Override
+    public void fireKreditantragStornoEvent(Kreditantrag kreditantrag) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+
 }

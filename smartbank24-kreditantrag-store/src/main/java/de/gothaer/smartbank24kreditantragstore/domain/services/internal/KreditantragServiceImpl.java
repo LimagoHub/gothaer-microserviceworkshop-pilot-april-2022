@@ -8,19 +8,29 @@ import de.gothaer.smartbank24kreditantragstore.domain.services.KreditantragServi
 import de.gothaer.smartbank24kreditantragstore.domain.services.KreditantragServiceException;
 import lombok.AllArgsConstructor;
 
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.concurrent.Flow;
+import java.util.concurrent.SubmissionPublisher;
+
 @AllArgsConstructor
 public class KreditantragServiceImpl implements KreditantragService {
 
     public static final String FEHLER_BEIM_VERARBEITEN_DES_SCORINGS = "Fehler beim Verarbeiten des Scorings. Antrag mit der IS '%s'.";
     private final KreditantragRepository repo;
     private final KreditantragMapper mapper;
+    private final SubmissionPublisher<Map.Entry<Kreditantrag,Kreditantrag.StatusWechsel>> publisher = new SubmissionPublisher<>();
+    @Override
+    public void subscribe(Flow.Subscriber<Map.Entry<Kreditantrag,Kreditantrag.StatusWechsel>> subscriber) {
+        publisher.subscribe(subscriber);
+    }
 
     @Override
     public void speichereKreditantrag(Kreditantrag antrag) throws KreditantragServiceException {
         try {
             throwExceptionIfApplicationenAlreadyExits(antrag);
             repo.save(mapper.convert(antrag));
-
+            publisher.submit(new AbstractMap.SimpleEntry<>(antrag,Kreditantrag.StatusWechsel.PERSISTED));
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format("Fehler beim Speiochern des Antrags mit der IS '%s'.",antrag.getCreditApplicationId()) , e);
         }
@@ -32,7 +42,8 @@ public class KreditantragServiceImpl implements KreditantragService {
             var kreditantrag = findeKreditantragMitId(id);
             var result = kreditantrag.behandlePositivesScoring();
             save(kreditantrag);
-
+            if(result != Kreditantrag.StatusWechsel.NO_CHANGE)
+                publisher.submit(new AbstractMap.SimpleEntry<>(kreditantrag,result));
             return result;
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(FEHLER_BEIM_VERARBEITEN_DES_SCORINGS,id) , e);
@@ -46,6 +57,8 @@ public class KreditantragServiceImpl implements KreditantragService {
             var kreditantrag = findeKreditantragMitId(id);
             var result = kreditantrag.behandlePositivesCityScoring();
             save(kreditantrag);
+            if(result != Kreditantrag.StatusWechsel.NO_CHANGE)
+                publisher.submit(new AbstractMap.SimpleEntry<>(kreditantrag,result));
             return result;
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(FEHLER_BEIM_VERARBEITEN_DES_SCORINGS,id) , e);
@@ -59,6 +72,8 @@ public class KreditantragServiceImpl implements KreditantragService {
             var kreditantrag = findeKreditantragMitId(id);
             var result = kreditantrag.behandleNegativesScoring();
             save(kreditantrag);
+            if(result != Kreditantrag.StatusWechsel.NO_CHANGE)
+                publisher.submit(new AbstractMap.SimpleEntry<>(kreditantrag,result));
             return result;
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(FEHLER_BEIM_VERARBEITEN_DES_SCORINGS,id) , e);
@@ -71,6 +86,8 @@ public class KreditantragServiceImpl implements KreditantragService {
             var kreditantrag = findeKreditantragMitId(id);
             var result = kreditantrag.behandleNegativesCityScoring();
             save(kreditantrag);
+            if(result != Kreditantrag.StatusWechsel.NO_CHANGE)
+                publisher.submit(new AbstractMap.SimpleEntry<>(kreditantrag,result));
             return result;
         } catch (RuntimeException e) {
             throw new KreditantragServiceException(String.format(FEHLER_BEIM_VERARBEITEN_DES_SCORINGS,id) , e);

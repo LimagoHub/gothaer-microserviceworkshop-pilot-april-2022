@@ -19,7 +19,7 @@ public class Kreditantrag implements Serializable {
 
     private final StateFactory factory=new StateFactory();
 
-    public enum StatusWechsel{NO_CHANGE, STORNO, ACCEPTED, DENIED}
+    public enum StatusWechsel{NO_CHANGE, STORNO, ACCEPTED, DENIED, PERSISTED}
 
     private String creditApplicationId;
 
