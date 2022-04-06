@@ -1,9 +1,9 @@
-package de.gothaer.smartbank24kreditantragstore.application.handler.internal;
+package de.gothaer.smartbank24kreditantragstore.application.servicehandler.internal;
 
 import de.gothaer.smartbank24kreditantragstore.application.events.KreditantragEvent;
 import de.gothaer.smartbank24kreditantragstore.application.events.ScoringEvent;
 import de.gothaer.smartbank24kreditantragstore.application.events.eventstore.services.EventService;
-import de.gothaer.smartbank24kreditantragstore.application.handler.KreditantragHandler;
+import de.gothaer.smartbank24kreditantragstore.application.servicehandler.KreditantragHandler;
 import de.gothaer.smartbank24kreditantragstore.application.mapper.KreditantragDTOMapper;
 import de.gothaer.smartbank24kreditantragstore.domain.aggregates.Kreditantrag;
 import de.gothaer.smartbank24kreditantragstore.domain.services.KreditantragService;

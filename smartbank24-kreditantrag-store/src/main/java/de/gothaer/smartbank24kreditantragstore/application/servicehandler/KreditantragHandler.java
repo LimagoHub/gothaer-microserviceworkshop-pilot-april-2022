@@ -1,4 +1,4 @@
-package de.gothaer.smartbank24kreditantragstore.application.handler;
+package de.gothaer.smartbank24kreditantragstore.application.servicehandler;
 
 
 import de.gothaer.smartbank24kreditantragstore.application.events.KreditantragEvent;

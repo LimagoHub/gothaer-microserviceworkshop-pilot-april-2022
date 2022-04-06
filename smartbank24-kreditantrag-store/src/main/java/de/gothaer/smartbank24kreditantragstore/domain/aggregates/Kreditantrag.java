@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 @Builder
+
+
 public class Kreditantrag implements Serializable {
 
 
@@ -152,7 +154,7 @@ Wilde Hilfsklassen zur Vermeidung von IF-Orgien
     }
     class StateFactory implements Serializable{
 
-        private static final String PREFIX = "de.limago.kreditantragstore.services.models.Kreditantrag$";
+        private static final String PREFIX = "de.gothaer.smartbank24kreditantragstore.domain.aggregates.Kreditantrag$";
         public KreditantragZustandHandler create(KreditantragStatus kreditantragState) {
             try {
 
