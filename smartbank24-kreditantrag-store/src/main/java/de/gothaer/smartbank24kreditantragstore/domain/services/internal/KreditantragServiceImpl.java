@@ -30,6 +30,7 @@ public class KreditantragServiceImpl implements KreditantragService {
     public Kreditantrag.StatusWechsel verarbeitePositivesScoring(String id) throws KreditantragServiceException {
         try {
             var kreditantrag = findeKreditantragMitId(id);
+            System.out.println("############# s" + kreditantrag);
             var result = kreditantrag.behandlePositivesScoring();
             save(kreditantrag);
 
@@ -44,6 +45,7 @@ public class KreditantragServiceImpl implements KreditantragService {
     public Kreditantrag.StatusWechsel verarbeitePositivesCityScoring(String id) throws KreditantragServiceException {
         try {
             var kreditantrag = findeKreditantragMitId(id);
+            System.out.println("############# cs" + kreditantrag);
             var result = kreditantrag.behandlePositivesCityScoring();
             save(kreditantrag);
             return result;
