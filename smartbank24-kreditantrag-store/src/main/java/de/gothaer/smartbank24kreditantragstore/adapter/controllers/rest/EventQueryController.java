@@ -1,8 +1,8 @@
 package de.gothaer.smartbank24kreditantragstore.adapter.controllers.rest;
 
 
-import de.gothaer.smartbank24kreditantragstore.application.events.eventstore.entities.AbstractEventEntity;
-import de.gothaer.smartbank24kreditantragstore.application.events.eventstore.repositories.EventRepository;
+import de.gothaer.smartbank24kreditantragstore.adapter.events.eventstore.entities.AbstractEventEntity;
+import de.gothaer.smartbank24kreditantragstore.adapter.events.eventstore.repositories.EventRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/gothaer-microserviceworkshop-pilot-april-2022.iml" filepath="$PROJECT_DIR$/.idea/gothaer-microserviceworkshop-pilot-april-2022.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartbank24-kreditantrag-city-scoring/smartbank24-kreditantrag-city-scoring.iml" filepath="$PROJECT_DIR$/smartbank24-kreditantrag-city-scoring/smartbank24-kreditantrag-city-scoring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartbank24-kreditantrag-registrierung/smartbank24-kreditantrag-registrierung.iml" filepath="$PROJECT_DIR$/smartbank24-kreditantrag-registrierung/smartbank24-kreditantrag-registrierung.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartbank24-kreditantrag-scoring/smartbank24-kreditantrag-scoring.iml" filepath="$PROJECT_DIR$/smartbank24-kreditantrag-scoring/smartbank24-kreditantrag-scoring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartbank24-kreditantrag-store/smartbank24-kreditantrag-store.iml" filepath="$PROJECT_DIR$/smartbank24-kreditantrag-store/smartbank24-kreditantrag-store.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartbank24-kreditvertrag-store/smartbank24-kreditvertrag-store.iml" filepath="$PROJECT_DIR$/smartbank24-kreditvertrag-store/smartbank24-kreditvertrag-store.iml" />
+    </modules>
+  </component>
+</project>

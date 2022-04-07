@@ -1,9 +1,9 @@
 package de.gothaer.smartbank24kreditantragstore.adapter.eventlistener;
 
 
-import de.gothaer.smartbank24kreditantragstore.application.events.KreditantragEvent;
-import de.gothaer.smartbank24kreditantragstore.application.events.ScoringEvent;
-import de.gothaer.smartbank24kreditantragstore.application.servicehandler.KreditantragHandler;
+import de.gothaer.smartbank24kreditantragstore.adapter.events.KreditantragEvent;
+import de.gothaer.smartbank24kreditantragstore.adapter.events.ScoringEvent;
+import de.gothaer.smartbank24kreditantragstore.adapter.servicehandler.KreditantragHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
