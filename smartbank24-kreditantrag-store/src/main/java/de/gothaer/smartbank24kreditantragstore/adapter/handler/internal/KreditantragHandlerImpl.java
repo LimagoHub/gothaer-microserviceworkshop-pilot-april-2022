@@ -1,15 +1,16 @@
-package de.gothaer.smartbank24kreditantragstore.adapter.servicehandler.internal;
+package de.gothaer.smartbank24kreditantragstore.adapter.handler.internal;
 
 import de.gothaer.smartbank24kreditantragstore.adapter.events.eventstore.services.EventService;
 import de.gothaer.smartbank24kreditantragstore.adapter.mapper.KreditantragDTOMapper;
 import de.gothaer.smartbank24kreditantragstore.adapter.events.KreditantragEvent;
 import de.gothaer.smartbank24kreditantragstore.adapter.events.ScoringEvent;
-import de.gothaer.smartbank24kreditantragstore.adapter.servicehandler.KreditantragHandler;
+import de.gothaer.smartbank24kreditantragstore.adapter.handler.KreditantragHandler;
 import de.gothaer.smartbank24kreditantragstore.domain.aggregates.Kreditantrag;
 import de.gothaer.smartbank24kreditantragstore.domain.services.KreditantragService;
 import de.gothaer.smartbank24kreditantragstore.domain.services.KreditantragServiceException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,8 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     private final EventService eventService;
     private final KreditantragDTOMapper mapper;
     @Override
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = KreditantragServiceException.class)
     public void handleKreditantragRegistriert(KreditantragEvent event) throws KreditantragServiceException {
 
         try {
@@ -39,6 +42,8 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     }
 
     @Override
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = KreditantragServiceException.class)
     public void handleScoringPositive(ScoringEvent event) throws KreditantragServiceException {
 
         try {
@@ -53,6 +58,8 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
 
 
     @Override
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = KreditantragServiceException.class)
     public void handleScoringNegative(ScoringEvent event) throws KreditantragServiceException {
         try {
             eventService.storeScoringNegativeEvent(event);
@@ -66,6 +73,8 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = KreditantragServiceException.class)
+    @Async
     public void handleCityScoringPositive(ScoringEvent event) throws KreditantragServiceException {
         try {
             eventService.storeCityScoringPositiveEvent(event);
@@ -79,6 +88,8 @@ public class KreditantragHandlerImpl implements KreditantragHandler {
     }
 
     @Override
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = KreditantragServiceException.class)
     public void handleCityScoringNegative(ScoringEvent event) throws KreditantragServiceException {
         try {
             eventService.storeCityScoringNegativeEvent(event);
